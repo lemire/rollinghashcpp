@@ -4,7 +4,7 @@ Daniel Lemire
 License: Apache 2.0
 
 
-What is this?
+## What is this?
 
 This is a set of C++ classes implementing various recursive n-gram hashing techniques, also called rolling hashing (http://en.wikipedia.org/wiki/Rolling_hash), including:
 
