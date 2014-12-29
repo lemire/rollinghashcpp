@@ -35,7 +35,7 @@ class GeneralHash {
       			} else if (wordsize == 9) {
         			irreduciblepoly = 1+(1<<2)+(1<<3)+(1<<5)+(1<<9);
       			} else {
-        			cerr << "unsupport wordsize "<<wordsize << endl;
+        			cerr << "unsupported wordsize "<<wordsize << " bits, try 19 or 9"<< endl;
       			}
       		   // in case the precomp is activated at the template level
       		   if(precomputationtype==FULLPRECOMP) {

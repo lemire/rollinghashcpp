@@ -14,7 +14,7 @@ using namespace std;
 
 class mersenneRNG {
  public:
-  mersenneRNG(uint32 maxval) : mtr(25),n(maxval) {};
+  mersenneRNG(uint32 maxval) : mtr(),n(maxval) {};
   uint32 operator()() { return mtr.randInt(n);} 
   void seed(uint32 seedval) { mtr.seed(seedval);}
   void seed() { mtr.seed();}
