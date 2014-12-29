@@ -3,7 +3,7 @@
 #
 .SUFFIXES: .cpp .o .c .h
 
-CXXFLAGS = -g0 -O3  -Wall  -Woverloaded-virtual  -Wsign-promo -Wold-style-cast 
+CXXFLAGS = -ggdb -g3 -O2  -Wall  -Woverloaded-virtual  -Wsign-promo -Wold-style-cast 
 #-DNDEBUG
 all: unit speedtesting
 
