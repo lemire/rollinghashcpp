@@ -60,6 +60,8 @@ bool isItRandom(uint L = 19) {
             cout<<"It is randomized! "<<endl;
             return true;
         }
+          cout<<"collision "<<y<<endl;
+
   }
   cout<<"Not randomized! "<<endl;
   return false;// we conclude that it always hashes to the same value (this is bad)
@@ -81,12 +83,12 @@ bool test() {
  	  ok&=isItAFunction<CyclicHash>(L);
 	}
 	ok&=isItRandom<CyclicHash>();
-if(false){	cout<<"three-wise"<<endl;
+    cout<<"three-wise"<<endl;
 	for(uint L = 1; L<=32;++L) {
 	  ok&=isItAFunction<ThreeWiseHash>(L);
 	}
 	ok&=isItRandom<ThreeWiseHash>();
-	}cout<<"general"<<endl;
+	cout<<"general"<<endl;
 	ok&=isItAFunction<GeneralHash<NOPRECOMP> >(9);
 	if(!ok) return false;
 	ok&=isItRandom<GeneralHash<NOPRECOMP> >();

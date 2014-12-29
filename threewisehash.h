@@ -11,7 +11,21 @@ using namespace std;
 /**
 * Each instance is a rolling hash function meant to hash streams of characters.
 * Each new instance of this class comes with new random keys.
+*
+* Recommended usage to get L-bit hash values over n-grams:
+*        ThreeWiseHash hf(n,L );
+*        for(uint32 k = 0; k<n;++k) {
+*                  chartype c = ... ; // grab some character
+*                  hf.eat(c); // feed it to the hasher
+*        }
+*        while(...) { // go over your string
+*           hf.hashvalue; // at all times, this contains the hash value
+*           chartype c = ... ;// point to the next character
+*           chartype out = ...; // character we want to forget
+*           hf.update(out,c); // update hash value
+*        }
 */
+
 class ThreeWiseHash {
 
   public:
@@ -30,29 +44,32 @@ class ThreeWiseHash {
       }
     }
     
+    // add inchar as an input, this is used typically only at the start
     void eat(chartype inchar) {
     	ngram.push_back(inchar);
     	__updateHashValue();
     }
     
-    inline void update(chartype outchar, chartype inchar) {
+    // add inchar as an input and remove outchar, the hashvalue is updated
+    void update(chartype outchar, chartype inchar) {
     	ngram.push_back(inchar);
     	ngram.pop_front();
     	__updateHashValue();
     }
     
-    inline void __updateHashValue() {    
+    void __updateHashValue() {    
     	hashvalue = 0;
     	for(uint32 k = 0; k<ngram.size(); ++k) {
     		hashvalue ^= hashers[k].hashvalues[ngram[k]];
     	}
     }
     
+    // this is a convenience function, use eat,update and .hashvalue to use as a rolling hash function 
     template<class container>
     hashvaluetype hash(container & c) {
     	hashvaluetype answer(0);
-    	for(uint32 k = 0; k<ngram.size(); ++k) {
-    		hashvalue ^= hashers[k].hashvalues[c[k]];
+    	for(uint32 k = 0; k<c.size(); ++k) {
+    		answer ^= hashers[k].hashvalues[c[k]];
     	}
     	return answer;
     }

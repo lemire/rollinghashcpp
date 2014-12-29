@@ -6,6 +6,19 @@
 /**
 * Each instance is a rolling hash function meant to hash streams of characters.
 * Each new instance of this class comes with new random keys.
+*
+* Recommended usage to get L-bit hash values over n-grams:
+*        CyclicHash hf(n,L );
+*        for(uint32 k = 0; k<n;++k) {
+*                  chartype c = ... ; // grab some character
+*                  hf.eat(c); // feed it to the hasher
+*        }
+*        while(...) { // go over your string
+*           hf.hashvalue; // at all times, this contains the hash value
+*           chartype c = ... ;// point to the next character
+*           chartype out = ...; // character we want to forget
+*           hf.update(out,c); // update hash value
+*        }
 */
 class CyclicHash {
 
@@ -25,21 +38,21 @@ class CyclicHash {
       } 
     }
     
-    inline void fastleftshiftn(hashvaluetype & x) const {
+    void fastleftshiftn(hashvaluetype & x) const {
         x =  ((x & maskn) << myr ) | (x >> (wordsize-myr)) ;     }
 
-    inline void fastleftshift(hashvaluetype & x, int r) const {
+    void fastleftshift(hashvaluetype & x, int r) const {
         r = r % wordsize;
         const uint32 mask = (static_cast<uint32>(1)<<(wordsize-r)) -1 ;
         x =  ((x & mask) << r ) | (x >> (wordsize-r)) ;
     }
 
     
-    inline void fastleftshift1(hashvaluetype & x) const {
+    void fastleftshift1(hashvaluetype & x) const {
         x =  ((x & mask1) << 1 ) | (x >> (wordsize-1)) ;
     }
     
-    
+     // this is a convenience function, use eat,update and .hashvalue to use as a rolling hash function 
     template<class container>
     hashvaluetype  hash(container & c) {
     	assert(c.size()==static_cast<uint>(n));
@@ -51,8 +64,8 @@ class CyclicHash {
     	return answer;
     }
     
-    
-    inline void update(chartype outchar, chartype inchar) {
+    // add inchar as an input and remove outchar, the hashvalue is updated
+    void update(chartype outchar, chartype inchar) {
       hashvaluetype z (hasher.hashvalues[outchar]);
       fastleftshiftn(z);
       hashvalue =   ( ((hashvalue & mask1) << 1 ) | (hashvalue >> (wordsize-1)) )  
@@ -61,7 +74,7 @@ class CyclicHash {
     }
     
     
-    
+    // add inchar as an input, this is used typically only at the start
     void eat(chartype inchar) {
       fastleftshift1(hashvalue);
       hashvalue ^= hasher.hashvalues[inchar];

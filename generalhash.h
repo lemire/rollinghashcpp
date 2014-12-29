@@ -13,6 +13,19 @@ enum{NOPRECOMP,FULLPRECOMP};
 /**
 * Each instance is a rolling hash function meant to hash streams of characters.
 * Each new instance of this class comes with new random keys.
+*
+* Recommended usage to get L-bit hash values over n-grams:
+*        GeneralHash<> hf(n,L );
+*        for(uint32 k = 0; k<n;++k) {
+*                  chartype c = ... ; // grab some character
+*                  hf.eat(c); // feed it to the hasher
+*        }
+*        while(...) { // go over your string
+*           hf.hashvalue; // at all times, this contains the hash value
+*           chartype c = ... ;// point to the next character
+*           chartype out = ...; // character we want to forget
+*           hf.update(out,c); // update hash value
+*        }
 */
 template <int precomputationtype=NOPRECOMP>
 class GeneralHash {
@@ -48,7 +61,7 @@ class GeneralHash {
     }
 
     
-    inline void fastleftshift(hashvaluetype & x, int r) const {
+    void fastleftshift(hashvaluetype & x, int r) const {
       for (int i = 0; i < r;++i) {
         x  <<= 1;
         if(( x & lastbit) == lastbit)
@@ -56,7 +69,7 @@ class GeneralHash {
       }
     }
     
-    inline void fastleftshiftn(hashvaluetype & x) const {
+    void fastleftshiftn(hashvaluetype & x) const {
       x=
       // take the last n bits and look-up the result
       precomputedshift[(x >> (wordsize-n))] 
@@ -65,7 +78,8 @@ class GeneralHash {
       ((x << n) & (lastbit -1 ));
     }
     
-    inline void update(chartype outchar, chartype inchar) {
+    // add inchar as an input and remove outchar, the hashvalue is updated
+    void update(chartype outchar, chartype inchar) {
       hashvalue <<= 1;
       if(( hashvalue & lastbit) == lastbit)
           hashvalue ^= irreduciblepoly;
@@ -82,13 +96,13 @@ class GeneralHash {
     }
     
     
-    
+    // add inchar as an input, this is used typically only at the start
     void eat(chartype inchar) {
       fastleftshift(hashvalue,1);
       hashvalue ^=  hasher.hashvalues[inchar];
     }
     
-
+    // this is a convenience function, use eat,update and .hashvalue to use as a rolling hash function 
     template<class container>
     hashvaluetype  hash(container & c) const {
     	assert(c.size()==static_cast<uint>(n));

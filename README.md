@@ -23,10 +23,10 @@ This is a set of C++ classes implementing various recursive n-gram hashing techn
                   hf.eat(c); // feed it to the hasher
         }
         while(...) { // go over your string
+           hf.hashvalue; // at all times, this contains the hash value
            chartype c = ... ;// point to the next character
            chartype out = ...; // character we want to forget
            hf.update(out,c); // update hash value
-           hf.hashvalue; // at all times, this contains the hash value
         }
 
 ##  Requirements 
