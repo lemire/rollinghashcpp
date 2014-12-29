@@ -9,9 +9,17 @@
 using namespace std;
 
 enum{NOPRECOMP,FULLPRECOMP};
+
+/**
+* Each instance is a rolling hash function meant to hash streams of characters.
+* Each new instance of this class comes with new random keys.
+*/
 template <int precomputationtype=NOPRECOMP>
 class GeneralHash {
   public:
+  
+    // myn is the length of the sequences, e.g., 3 means that you want to hash sequences of 3 characters 
+    // mywordsize is the number of bits you which to receive as hash values, e.g., 19 means that the hash values are 19-bit integers
     GeneralHash(int myn, int mywordsize = 19): 
           hashvalue(0),
           wordsize(mywordsize),
