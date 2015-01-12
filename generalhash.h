@@ -105,7 +105,6 @@ class GeneralHash {
     // this is a convenience function, use eat,update and .hashvalue to use as a rolling hash function 
     template<class container>
     hashvaluetype  hash(container & c) const {
-    	assert(c.size()==static_cast<uint>(n));
     	hashvaluetype answer(0);
     	for(uint k = 0; k<c.size();++k) {
     		fastleftshift(answer, 1) ;
@@ -116,7 +115,7 @@ class GeneralHash {
 
     hashvaluetype hashvalue;
     const int wordsize;
-    const int n;
+    int n;
     hashvaluetype irreduciblepoly;
     CharacterHash hasher;
     const hashvaluetype lastbit;

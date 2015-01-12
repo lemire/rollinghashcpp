@@ -55,7 +55,6 @@ class CyclicHash {
      // this is a convenience function, use eat,update and .hashvalue to use as a rolling hash function 
     template<class container>
     hashvaluetype  hash(container & c) {
-    	assert(c.size()==static_cast<uint>(n));
     	hashvaluetype answer(0);
     	for(uint k = 0; k<c.size();++k) {
     		fastleftshift(answer, 1) ;
@@ -81,7 +80,8 @@ class CyclicHash {
     }
   
     uint32 hashvalue;
-    const int n, wordsize;
+    int n;
+    const int wordsize;
     CharacterHash hasher;
     const hashvaluetype mask1;
     const int myr;

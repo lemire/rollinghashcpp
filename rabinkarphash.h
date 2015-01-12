@@ -64,7 +64,8 @@ class KarpRabinHash {
     } 
        
     hashvaluetype hashvalue;
-    const int n, wordsize;
+    int n;
+    const wordsize;
     CharacterHash hasher;
     const hashvaluetype HASHMASK;
     hashvaluetype BtoN;

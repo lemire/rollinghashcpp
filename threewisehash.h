@@ -75,7 +75,8 @@ class ThreeWiseHash {
     }
     
     hashvaluetype hashvalue;
-    const int n, wordsize;
+    int n;
+    const int wordsize;
     deque<chartype> ngram;
     vector<CharacterHash> hashers;
     CharacterHash hasher;//placeholder

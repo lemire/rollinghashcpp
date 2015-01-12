@@ -43,6 +43,10 @@ bool isItAFunction(uint L = 7) {
 	return true;
 }
 
+
+
+
+
 template<class hashfunction>
 bool isItRandom(uint L = 19) {
   cout<<"checking that it is randomized "<<endl;
