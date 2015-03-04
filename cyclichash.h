@@ -8,7 +8,7 @@
 * Each new instance of this class comes with new random keys.
 *
 * Recommended usage to get L-bit hash values over n-grams:
-*        CyclicHash hf(n,L );
+*        CyclicHash<> hf(n,L );
 *        for(uint32 k = 0; k<n;++k) {
 *                  chartype c = ... ; // grab some character
 *                  hf.eat(c); // feed it to the hasher
@@ -20,6 +20,7 @@
 *           hf.update(out,c); // update hash value
 *        }
 */
+template <typename hashvaluetype = uint32, typename chartype =  unsigned char>
 class CyclicHash {
 
   public:
@@ -30,7 +31,7 @@ class CyclicHash {
       hasher( ( 1<<wordsize ) - 1),
       mask1((static_cast<hashvaluetype>(1)<<(wordsize-1)) -1),
       myr(n%wordsize),
-      maskn((static_cast<uint32>(1)<<(wordsize-myr)) -1 )
+      maskn((static_cast<hashvaluetype>(1)<<(wordsize-myr)) -1 )
       {
        if(static_cast<uint>(wordsize) > 8*sizeof(hashvaluetype)) {
       	cerr<<"Can't create "<<wordsize<<"-bit hash values"<<endl;
@@ -43,7 +44,7 @@ class CyclicHash {
 
     void fastleftshift(hashvaluetype & x, int r) const {
         r = r % wordsize;
-        const uint32 mask = (static_cast<uint32>(1)<<(wordsize-r)) -1 ;
+        const hashvaluetype mask = (static_cast<hashvaluetype>(1)<<(wordsize-r)) -1 ;
         x =  ((x & mask) << r ) | (x >> (wordsize-r)) ;
     }
 
@@ -79,10 +80,10 @@ class CyclicHash {
       hashvalue ^= hasher.hashvalues[inchar];
     }
   
-    uint32 hashvalue;
+    hashvaluetype hashvalue;
     int n;
     const int wordsize;
-    CharacterHash hasher;
+    CharacterHash<hashvaluetype,chartype> hasher;
     const hashvaluetype mask1;
     const int myr;
     const hashvaluetype maskn;

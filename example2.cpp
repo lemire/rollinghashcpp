@@ -11,7 +11,7 @@
 
 int main(int argc, char * argv[])
 {
-    CyclicHash hf(5,19);
+    CyclicHash<>  hf(5,19);
     string input = "ABCDE";
     hf.eat(input[0]);//A
     hf.eat(input[1]);//B

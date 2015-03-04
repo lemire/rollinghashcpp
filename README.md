@@ -17,7 +17,7 @@ This is a set of C++ classes implementing various recursive n-gram hashing techn
 
         const uint n(3);//hash all sequences of 3 characters
         const uint L(7); // you need 7 bits
-        CyclicHash hf(n,L );
+        CyclicHash<uint32> hf(n,L );// if you want 64-bit values replace uint32 by uint64
         for(uint32 k = 0; k<n;++k) {
                   chartype c = ... ; // grab some character
                   hf.eat(c); // feed it to the hasher
@@ -28,6 +28,8 @@ This is a set of C++ classes implementing various recursive n-gram hashing techn
            chartype out = ...; // character we want to forget
            hf.update(out,c); // update hash value
         }
+
+
 
 ##  Requirements 
 

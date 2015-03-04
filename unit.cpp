@@ -77,21 +77,21 @@ bool test() {
 	cout<<"Karp-Rabin"<<endl;
 	for(uint L = 1; L<=32;++L) {
 		if(!ok) return false;
-		ok&=isItAFunction<KarpRabinHash>();
+		ok&=isItAFunction<KarpRabinHash<> >();
 	}
-	ok&=isItRandom<KarpRabinHash>();
+	ok&=isItRandom<KarpRabinHash<> >();
 	if(!ok) return false;
 	cout<<"cyclic"<<endl;
 	for(uint L = 1; L<=32;++L) {
 	  if(!ok) return false;
- 	  ok&=isItAFunction<CyclicHash>(L);
+ 	  ok&=isItAFunction<CyclicHash<> >(L);
 	}
-	ok&=isItRandom<CyclicHash>();
+	ok&=isItRandom<CyclicHash<> >();
     cout<<"three-wise"<<endl;
 	for(uint L = 1; L<=32;++L) {
-	  ok&=isItAFunction<ThreeWiseHash>(L);
+	  ok&=isItAFunction<ThreeWiseHash<> >(L);
 	}
-	ok&=isItRandom<ThreeWiseHash>();
+	ok&=isItRandom<ThreeWiseHash<> >();
 	cout<<"general"<<endl;
 	ok&=isItAFunction<GeneralHash<NOPRECOMP> >(9);
 	if(!ok) return false;

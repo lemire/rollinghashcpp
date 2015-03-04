@@ -55,11 +55,11 @@ void synthetic() {
 	uint sizeoftest = 100000000;
 	cout<<"#n three-wise General BufferedGeneral Cyclic Karp-Rabin "<<endl; 
 	for(uint n = 1;n+L<=32;++n) {
-	cout<<n<<" "<<hashALot<ThreeWiseHash>(n,L,1,sizeoftest,recorder)<<" ";
+	cout<<n<<" "<<hashALot<ThreeWiseHash<> >(n,L,1,sizeoftest,recorder)<<" ";
 	cout<<hashALot<GeneralHash<NOPRECOMP> >(n,L,1,sizeoftest,recorder)<<" ";
 	cout<<hashALot<GeneralHash<FULLPRECOMP> >(n,L,1,sizeoftest,recorder)<<" ";
-	cout<<hashALot<CyclicHash>(n,L+n,1,sizeoftest,recorder)<< " ";
-	cout<<hashALot<KarpRabinHash>(n,L,1,sizeoftest,recorder)<<endl;
+	cout<<hashALot<CyclicHash<> >(n,L+n,1,sizeoftest,recorder)<< " ";
+	cout<<hashALot<KarpRabinHash<> >(n,L,1,sizeoftest,recorder)<<endl;
 	}
 	cout <<"# L= "<<L<<" char-length= "<<sizeoftest<<endl;
 }
@@ -79,16 +79,15 @@ void realdata(string filename) {
 	int L = 19;
 	vector<hashvaluetype> recorder;
 	uint repeats=1;
-	//uint sizeoftest = 100000000;
 	vector<chartype>  data;
 	grabFileContent(data, filename);
 	cout<<"#n three-wise General BufferedGeneral Cyclic Karp-Rabin "<<endl; 
 	for(uint n = 1;n+L<=32;++n) {
-	cout<<n<<" "<<hashALot<ThreeWiseHash>(n,L,repeats,recorder,data)<<" ";
+	cout<<n<<" "<<hashALot<ThreeWiseHash<> >(n,L,repeats,recorder,data)<<" ";
 	cout<<hashALot<GeneralHash<NOPRECOMP> >(n,L,repeats,recorder,data)<<" ";
 	cout<<hashALot<GeneralHash<FULLPRECOMP> >(n,L,repeats,recorder,data)<<" ";
-	cout<<hashALot<CyclicHash>(n,L+n,repeats,recorder,data)<< " ";
-	cout<<hashALot<KarpRabinHash>(n,L,repeats,recorder,data)<<endl;
+	cout<<hashALot<CyclicHash<> >(n,L+n,repeats,recorder,data)<< " ";
+	cout<<hashALot<KarpRabinHash<> >(n,L,repeats,recorder,data)<<endl;
 	}
 	cout <<"# L= "<<L<<" char-length= "<<data.size()<< " repeats="<<repeats<<endl;
 

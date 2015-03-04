@@ -13,7 +13,7 @@ using namespace std;
 * Each new instance of this class comes with new random keys.
 *
 * Recommended usage to get L-bit hash values over n-grams:
-*        ThreeWiseHash hf(n,L );
+*        ThreeWiseHash<> hf(n,L );
 *        for(uint32 k = 0; k<n;++k) {
 *                  chartype c = ... ; // grab some character
 *                  hf.eat(c); // feed it to the hasher
@@ -25,7 +25,7 @@ using namespace std;
 *           hf.update(out,c); // update hash value
 *        }
 */
-
+template <typename hashvaluetype = uint32, typename chartype =  unsigned char>
 class ThreeWiseHash {
 
   public:
@@ -39,7 +39,7 @@ class ThreeWiseHash {
       	throw "abord";
       } 
       for (int i=0; i < n; ++i) {
-      	  CharacterHash ch(( 1<<wordsize ) - 1);
+      	  CharacterHash<hashvaluetype,chartype> ch(( 1<<wordsize ) - 1);
 	      hashers.push_back(ch); 
       }
     }
@@ -59,7 +59,7 @@ class ThreeWiseHash {
     
     void __updateHashValue() {    
     	hashvalue = 0;
-    	for(uint32 k = 0; k<ngram.size(); ++k) {
+    	for(size_t k = 0; k<ngram.size(); ++k) {
     		hashvalue ^= hashers[k].hashvalues[ngram[k]];
     	}
     }
@@ -68,7 +68,7 @@ class ThreeWiseHash {
     template<class container>
     hashvaluetype hash(container & c) {
     	hashvaluetype answer(0);
-    	for(uint32 k = 0; k<c.size(); ++k) {
+    	for(size_t k = 0; k<c.size(); ++k) {
     		answer ^= hashers[k].hashvalues[c[k]];
     	}
     	return answer;
@@ -78,8 +78,8 @@ class ThreeWiseHash {
     int n;
     const int wordsize;
     deque<chartype> ngram;
-    vector<CharacterHash> hashers;
-    CharacterHash hasher;//placeholder
+    vector<CharacterHash<hashvaluetype,chartype> > hashers;
+    CharacterHash<hashvaluetype,chartype> hasher;//placeholder
     
 };
 

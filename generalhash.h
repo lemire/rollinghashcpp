@@ -27,7 +27,7 @@ enum{NOPRECOMP,FULLPRECOMP};
 *           hf.update(out,c); // update hash value
 *        }
 */
-template <int precomputationtype=NOPRECOMP>
+template <int precomputationtype=NOPRECOMP,typename hashvaluetype = uint32, typename chartype =  unsigned char>
 class GeneralHash {
   public:
   
@@ -117,7 +117,7 @@ class GeneralHash {
     const int wordsize;
     int n;
     hashvaluetype irreduciblepoly;
-    CharacterHash hasher;
+    CharacterHash<hashvaluetype,chartype> hasher;
     const hashvaluetype lastbit;
     vector<hashvaluetype> precomputedshift;
 

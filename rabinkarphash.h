@@ -11,7 +11,7 @@
 * Each new instance of this class comes with new random keys.
 *
 * Recommended usage to get L-bit hash values over n-grams:
-*        KarpRabinHash hf(n,L );
+*        KarpRabinHash<> hf(n,L );
 *        for(uint32 k = 0; k<n;++k) {
 *                  chartype c = ... ; // grab some character
 *                  hf.eat(c); // feed it to the hasher
@@ -23,6 +23,7 @@
 *           hf.update(out,c); // update hash value
 *        }
 */
+template <typename hashvaluetype = uint32, typename chartype =  unsigned char>
 class KarpRabinHash {
 
   public:
@@ -65,8 +66,8 @@ class KarpRabinHash {
        
     hashvaluetype hashvalue;
     int n;
-    const wordsize;
-    CharacterHash hasher;
+    const int wordsize;
+    CharacterHash<hashvaluetype,chartype> hasher;
     const hashvaluetype HASHMASK;
     hashvaluetype BtoN;
     static const hashvaluetype B=37;
