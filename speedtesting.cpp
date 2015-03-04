@@ -9,15 +9,15 @@ using namespace std;
 
 
 template<class hashfunction>
-double hashALot( int n, int L, uint ttimes,uint sizeoftest , vector<hashvaluetype> & recorder) {
+double hashALot( int n, int L, uint ttimes,uint sizeoftest , vector<uint32> & recorder) {
 	ZTimer t;
 	for(uint times = 0; times<ttimes;++times) {
 		hashfunction hf(n,L);
 		for(uint k = 0; k<static_cast<uint>(n);++k) {
-	 	 hf.eat(static_cast<chartype>(k));
+	 	 hf.eat(static_cast<unsigned char>(k));
 		}
 		for(uint k = n; k<sizeoftest;++k) {
-			hf.update(static_cast<chartype>(k-n),static_cast<chartype>(k));
+			hf.update(static_cast<unsigned char>(k-n),static_cast<unsigned char>(k));
 		}
 		/* The goal of the recorder is to prevent
 		the compiler from deciding that this whole computation
@@ -30,7 +30,7 @@ double hashALot( int n, int L, uint ttimes,uint sizeoftest , vector<hashvaluetyp
 
 
 template<class hashfunction>
-double hashALot( int n, int L, uint ttimes , vector<hashvaluetype> & recorder, vector<chartype> & data) {
+double hashALot( int n, int L, uint ttimes , vector<uint32> & recorder, vector<unsigned char> & data) {
 	ZTimer t;
 	for(uint times = 0; times<ttimes;++times) {
 		hashfunction hf(n,L);
@@ -51,7 +51,7 @@ double hashALot( int n, int L, uint ttimes , vector<hashvaluetype> & recorder, v
 
 void synthetic() {
 	int L = 19;
-	vector<hashvaluetype> recorder;
+	vector<uint32> recorder;
 	uint sizeoftest = 100000000;
 	cout<<"#n three-wise General BufferedGeneral Cyclic Karp-Rabin "<<endl; 
 	for(uint n = 1;n+L<=32;++n) {
@@ -64,7 +64,7 @@ void synthetic() {
 	cout <<"# L= "<<L<<" char-length= "<<sizeoftest<<endl;
 }
 
-void grabFileContent(vector<chartype> & data, string filename) {
+void grabFileContent(vector<unsigned char> & data, string filename) {
    string line;
    ifstream file(filename.c_str());
    getline(file, line);
@@ -77,9 +77,9 @@ void grabFileContent(vector<chartype> & data, string filename) {
 }
 void realdata(string filename) {
 	int L = 19;
-	vector<hashvaluetype> recorder;
+	vector<uint32> recorder;
 	uint repeats=1;
-	vector<chartype>  data;
+	vector<unsigned char>  data;
 	grabFileContent(data, filename);
 	cout<<"#n three-wise General BufferedGeneral Cyclic Karp-Rabin "<<endl; 
 	for(uint n = 1;n+L<=32;++n) {

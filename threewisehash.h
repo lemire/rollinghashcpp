@@ -15,13 +15,13 @@ using namespace std;
 * Recommended usage to get L-bit hash values over n-grams:
 *        ThreeWiseHash<> hf(n,L );
 *        for(uint32 k = 0; k<n;++k) {
-*                  chartype c = ... ; // grab some character
+*                  unsigned char c = ... ; // grab some character
 *                  hf.eat(c); // feed it to the hasher
 *        }
 *        while(...) { // go over your string
 *           hf.hashvalue; // at all times, this contains the hash value
-*           chartype c = ... ;// point to the next character
-*           chartype out = ...; // character we want to forget
+*           unsigned char c = ... ;// points to the next character
+*           unsigned char out = ...; // character we want to forget
 *           hf.update(out,c); // update hash value
 *        }
 */
@@ -39,7 +39,7 @@ class ThreeWiseHash {
       	throw "abord";
       } 
       for (int i=0; i < n; ++i) {
-      	  CharacterHash<hashvaluetype,chartype> ch(( 1<<wordsize ) - 1);
+      	  CharacterHash<hashvaluetype,chartype> ch(maskfnc<hashvaluetype>(wordsize));
 	      hashers.push_back(ch); 
       }
     }

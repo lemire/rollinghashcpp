@@ -10,13 +10,13 @@
 * Recommended usage to get L-bit hash values over n-grams:
 *        CyclicHash<> hf(n,L );
 *        for(uint32 k = 0; k<n;++k) {
-*                  chartype c = ... ; // grab some character
+*                  unsigned char c = ... ; // grab some character
 *                  hf.eat(c); // feed it to the hasher
 *        }
 *        while(...) { // go over your string
 *           hf.hashvalue; // at all times, this contains the hash value
-*           chartype c = ... ;// point to the next character
-*           chartype out = ...; // character we want to forget
+*           unsigned char c = ... ;// points to the next character
+*           unsigned char out = ...; // character we want to forget
 *           hf.update(out,c); // update hash value
 *        }
 */
@@ -28,10 +28,10 @@ class CyclicHash {
     // mywordsize is the number of bits you which to receive as hash values, e.g., 19 means that the hash values are 19-bit integers
     CyclicHash(int myn, int mywordsize=19) : hashvalue(0), 
     n(myn), wordsize(mywordsize), 
-      hasher( ( 1<<wordsize ) - 1),
-      mask1((static_cast<hashvaluetype>(1)<<(wordsize-1)) -1),
+      hasher(maskfnc<hashvaluetype>(wordsize)),
+      mask1(maskfnc<hashvaluetype>(wordsize-1)),
       myr(n%wordsize),
-      maskn((static_cast<hashvaluetype>(1)<<(wordsize-myr)) -1 )
+      maskn(maskfnc<hashvaluetype>(wordsize-myr))
       {
        if(static_cast<uint>(wordsize) > 8*sizeof(hashvaluetype)) {
       	cerr<<"Can't create "<<wordsize<<"-bit hash values"<<endl;
@@ -40,7 +40,8 @@ class CyclicHash {
     }
     
     void fastleftshiftn(hashvaluetype & x) const {
-        x =  ((x & maskn) << myr ) | (x >> (wordsize-myr)) ;     }
+        x =  ((x & maskn) << myr ) | (x >> (wordsize-myr)) ;     
+    }
 
     void fastleftshift(hashvaluetype & x, int r) const {
         r = r % wordsize;

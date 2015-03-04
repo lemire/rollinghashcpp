@@ -12,25 +12,24 @@ using namespace std;
 
 template<class hashfunction>
 bool isItAFunction(uint L = 7) {
-   //cout<<"checking that it is a function "<<endl;
 	mersenneRNG generator(5);
 	const uint n(3);//n-grams
 	hashfunction hf(n,L );
-	deque<chartype> s;
+	deque<unsigned char> s;
 	for(uint32 k = 0; k<n;++k) {
-	  chartype c = static_cast<chartype>(generator()+65);
+	  unsigned char c = static_cast<unsigned char>(generator()+65);
 	  s.push_back(c);
 	  hf.eat(c);
 	}
 	for(uint32 k = 0; k<100000;++k) {
-		chartype out = s.front();
+		unsigned char out = s.front();
 		 s.pop_front();
 		char c (generator()+65);
 
 		s.push_back(c);
 		hf.update(out,c);
 		if(hf.hash(s) != hf.hashvalue) {
-			for(deque<chartype>::iterator ii=s.begin(); ii!=s.end(); ++ii)
+			for(deque<unsigned char>::iterator ii=s.begin(); ii!=s.end(); ++ii)
 			cout<<*ii<<" "<<static_cast<uint32>(*ii)<<endl;
 		  	cerr<<"bug"<<endl;
 		  	cerr<<s[0]<<s[1]<<s[2]<<" was hashed to "<<hf.hashvalue
@@ -39,9 +38,10 @@ bool isItAFunction(uint L = 7) {
 		  	  cerr<<s[j]<<"->"<<hf.hasher.hashvalues[s[j]]<<endl;
 		  	return false;
 		}
-	}
+	} 
 	return true;
 }
+
 
 
 
@@ -51,15 +51,15 @@ template<class hashfunction>
 bool isItRandom(uint L = 19) {
   cout<<"checking that it is randomized "<<endl;
   int n = 5;
-  vector<chartype> data(n);
+  vector<unsigned char> data(n);
   for(int k =  0; k < n; ++k ) {
-    data[k] = static_cast<chartype>(k);
+    data[k] = static_cast<unsigned char>(k);
   }
   hashfunction base(n,L );
-  hashvaluetype x = base.hash(data); 
+  uint64 x = base.hash(data); 
   for(int k =  0; k < 100; ++k ) {
     	hashfunction hf(n,L);
-    	hashvaluetype y = hf.hash(data); 
+    	uint64 y = hf.hash(data); 
     	if(y != x) {
             cout<<"It is randomized! "<<endl;
             return true;
@@ -80,18 +80,34 @@ bool test() {
 		ok&=isItAFunction<KarpRabinHash<> >();
 	}
 	ok&=isItRandom<KarpRabinHash<> >();
+	for(uint L = 1; L<=64;++L) {
+		if(!ok) return false;
+		ok&=isItAFunction<KarpRabinHash<uint64> >();
+	}
+	ok&=isItRandom<KarpRabinHash<uint64> >();
 	if(!ok) return false;
 	cout<<"cyclic"<<endl;
-	for(uint L = 1; L<=32;++L) {
+	for(uint L = 2; L<=32;++L) {
 	  if(!ok) return false;
  	  ok&=isItAFunction<CyclicHash<> >(L);
 	}
+	for(uint L = 2; L<=64;++L) { 
+	  if(!ok) return false;
+ 	  ok&=isItAFunction<CyclicHash<uint64> >(L);
+	}
 	ok&=isItRandom<CyclicHash<> >();
+	ok&=isItRandom<CyclicHash<uint64> >();
+
     cout<<"three-wise"<<endl;
 	for(uint L = 1; L<=32;++L) {
 	  ok&=isItAFunction<ThreeWiseHash<> >(L);
 	}
 	ok&=isItRandom<ThreeWiseHash<> >();
+	for(uint L = 1; L<=64;++L) {
+	  ok&=isItAFunction<ThreeWiseHash<uint64> >(L);
+	}
+	ok&=isItRandom<ThreeWiseHash<uint64> >();
+
 	cout<<"general"<<endl;
 	ok&=isItAFunction<GeneralHash<NOPRECOMP> >(9);
 	if(!ok) return false;

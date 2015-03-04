@@ -17,13 +17,13 @@ enum{NOPRECOMP,FULLPRECOMP};
 * Recommended usage to get L-bit hash values over n-grams:
 *        GeneralHash<> hf(n,L );
 *        for(uint32 k = 0; k<n;++k) {
-*                  chartype c = ... ; // grab some character
+*                  unsigned char c = ... ; // grab some character
 *                  hf.eat(c); // feed it to the hasher
 *        }
 *        while(...) { // go over your string
 *           hf.hashvalue; // at all times, this contains the hash value
-*           chartype c = ... ;// point to the next character
-*           chartype out = ...; // character we want to forget
+*           unsigned char c = ... ;// points to the next character
+*           unsigned char out = ...; // character we want to forget
 *           hf.update(out,c); // update hash value
 *        }
 */
@@ -38,7 +38,7 @@ class GeneralHash {
           wordsize(mywordsize),
           n(myn), 
           irreduciblepoly(0), 
-          hasher(( 1<<wordsize ) - 1),
+          hasher(maskfnc<hashvaluetype>(wordsize)),
           lastbit(static_cast<hashvaluetype>(1)<<wordsize),
            precomputedshift(precomputationtype==FULLPRECOMP ? (1<<n) : 0){
     		  if(wordsize == 19) {

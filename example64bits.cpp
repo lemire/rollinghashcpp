@@ -10,7 +10,7 @@
 
 int main(int argc, char * argv[])
 {
-    CyclicHash<uint64>  hf(5,19);
+    CyclicHash<uint64>  hf(5,64);
     string input = "ABCDE";
     hf.eat(input[0]);//A
     hf.eat(input[1]);//B

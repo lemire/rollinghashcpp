@@ -13,13 +13,13 @@
 * Recommended usage to get L-bit hash values over n-grams:
 *        KarpRabinHash<> hf(n,L );
 *        for(uint32 k = 0; k<n;++k) {
-*                  chartype c = ... ; // grab some character
+*                  unsigned char c = ... ; // grab some character
 *                  hf.eat(c); // feed it to the hasher
 *        }
 *        while(...) { // go over your string
 *           hf.hashvalue; // at all times, this contains the hash value
-*           chartype c = ... ;// point to the next character
-*           chartype out = ...; // character we want to forget
+*           unsigned char c = ... ;// points to the next character
+*           unsigned char out = ...; // character we want to forget
 *           hf.update(out,c); // update hash value
 *        }
 */
@@ -31,8 +31,8 @@ class KarpRabinHash {
     // mywordsize is the number of bits you which to receive as hash values, e.g., 19 means that the hash values are 19-bit integers
     KarpRabinHash(int myn, int mywordsize=19) :  hashvalue(0),n(myn), 
     wordsize(mywordsize), 
-      hasher( ( 1 << wordsize ) - 1),
-      HASHMASK( (0x1<<wordsize)-1),BtoN(1) {
+      hasher( maskfnc<hashvaluetype>(wordsize)),
+      HASHMASK(maskfnc<hashvaluetype>(wordsize)),BtoN(1) {
       for (int i=0; i < n ; ++i) {
 	      BtoN *= B;
 	      BtoN &= HASHMASK;  
