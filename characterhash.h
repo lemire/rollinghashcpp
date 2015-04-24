@@ -7,7 +7,7 @@ typedef unsigned int uint;
 
 #include <cassert>
 #include <iostream>
-
+#include <stdexcept>
 #include "mersennetwister.h"
 
 using namespace std;
