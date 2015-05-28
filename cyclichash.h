@@ -53,7 +53,21 @@ class CyclicHash {
     void fastleftshift1(hashvaluetype & x) const {
         x =  ((x & mask1) << 1 ) | (x >> (wordsize-1)) ;
     }
+
+    void fastrightshift1(hashvaluetype & x) const {
+          x =  (x  >> 1 ) | ((x & 1)<< (wordsize-1)) ;
+      }
     
+
+    hashvaluetype getfastleftshift1(hashvaluetype  x) const {
+        return ((x & mask1) << 1 ) | (x >> (wordsize-1)) ;
+    }
+
+
+    hashvaluetype getfastrightshift1(hashvaluetype  x) const {
+        return (x  >> 1 ) | ((x & 1)<< (wordsize-1)) ;
+    }
+
      // this is a convenience function, use eat,update and .hashvalue to use as a rolling hash function 
     template<class container>
     hashvaluetype  hash(container & c) {
@@ -66,17 +80,35 @@ class CyclicHash {
     }
     
     // add inchar as an input and remove outchar, the hashvalue is updated
+    // this function can be used to update the hash value from the hash value of [outchar]ABC to the hash value of ABC[inchar]
     void update(chartype outchar, chartype inchar) {
       hashvaluetype z (hasher.hashvalues[outchar]);
       fastleftshiftn(z);
-      hashvalue =   ( ((hashvalue & mask1) << 1 ) | (hashvalue >> (wordsize-1)) )  
-      ^ z
-      ^ hasher.hashvalues[inchar];
+      hashvalue =  getfastleftshift1(hashvalue)
+            ^ z
+            ^ hasher.hashvalues[inchar];
+
     }
     
-    
+    // this is the reverse of the update function.
+    // this function can be used to update the hash value from the hash value of ABC[inchar] to the hash value of [outchar]ABC
+    void reverse_update(chartype outchar, chartype inchar) {
+    	hashvaluetype z (hasher.hashvalues[outchar]);
+    	fastleftshiftn(z);
+    	hashvalue ^=   z ^ hasher.hashvalues[inchar];
+    	hashvalue = getfastrightshift1(hashvalue);
+    }
+
     // add inchar as an input, this is used typically only at the start
+    // the hash value is updated to that of a longer string (one where inchar was appended)
     void eat(chartype inchar) {
+      fastleftshift1(hashvalue);
+      hashvalue ^= hasher.hashvalues[inchar];
+    }
+
+
+    // prepend inchar as an input
+    void backeat(chartype inchar) {
       fastleftshift1(hashvalue);
       hashvalue ^= hasher.hashvalues[inchar];
     }

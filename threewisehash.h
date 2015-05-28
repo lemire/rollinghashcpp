@@ -45,17 +45,21 @@ class ThreeWiseHash {
     }
     
     // add inchar as an input, this is used typically only at the start
+    // the hash value is updated to that of a longer string (one where inchar was appended)
     void eat(chartype inchar) {
     	ngram.push_back(inchar);
     	__updateHashValue();
     }
     
     // add inchar as an input and remove outchar, the hashvalue is updated
+    // this function can be used to update the hash value from the hash value of [outchar]ABC to the hash value of ABC[inchar]
     void update(chartype outchar, chartype inchar) {
     	ngram.push_back(inchar);
     	ngram.pop_front();
     	__updateHashValue();
     }
+
+
     
     void __updateHashValue() {    
     	hashvalue = 0;

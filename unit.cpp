@@ -10,6 +10,10 @@
 
 using namespace std;
 
+
+
+
+
 template<class hashfunction>
 bool isItAFunction(uint L = 7) {
 	mersenneRNG generator(5);
@@ -43,7 +47,31 @@ bool isItAFunction(uint L = 7) {
 }
 
 
-
+template<class hashfunction>
+bool doesReverseUpdateWorks(uint L = 7) {
+	mersenneRNG generator(5);
+	const uint n(3);//n-grams
+	hashfunction hf(n,L );
+	deque<unsigned char> s;
+	for(uint32 k = 0; k<n;++k) {
+	  unsigned char c = static_cast<unsigned char>(generator()+65);
+	  s.push_back(c);
+	  hf.eat(c);
+	}
+	for(uint32 k = 0; k<100000;++k) {
+		unsigned char out = s.front();
+		 s.pop_front();
+		char c (generator()+65);
+		s.push_back(c);
+		hf.update(out,c);
+		hf.reverse_update(out,c);
+		hf.update(out,c);
+		if(hf.hash(s) != hf.hashvalue) {
+		  	return false;
+		}
+	}
+	return true;
+}
 
 
 
@@ -90,6 +118,7 @@ bool test() {
 	for(uint L = 2; L<=32;++L) {
 	  if(!ok) return false;
  	  ok&=isItAFunction<CyclicHash<> >(L);
+ 	  ok&=doesReverseUpdateWorks<CyclicHash<> >(L);
 	}
 	for(uint L = 2; L<=64;++L) { 
 	  if(!ok) return false;
