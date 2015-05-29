@@ -107,11 +107,6 @@ class CyclicHash {
     }
 
 
-    // prepend inchar as an input
-    void backeat(chartype inchar) {
-      fastleftshift1(hashvalue);
-      hashvalue ^= hasher.hashvalues[inchar];
-    }
   
     hashvaluetype hashvalue;
     int n;
