@@ -42,6 +42,9 @@ class CyclicHash {
     void fastleftshiftn(hashvaluetype & x) const {
         x =  ((x & maskn) << myr ) | (x >> (wordsize-myr)) ;     
     }
+    void fastleftshiftnplusone(hashvaluetype & x) const {
+        x =  ((x & maskn) << (myr+1) ) | (x >> (wordsize-myr-1)) ;
+    }
 
     void fastleftshift(hashvaluetype & x, int r) const {
         r = r % wordsize;
@@ -106,6 +109,17 @@ class CyclicHash {
       hashvalue ^= hasher.hashvalues[inchar];
     }
 
+    //for an n-gram X it returns hash value of (n + 1)-gram XY without changing the object X. For example, if X = "ABC", then X.hash_extend("D") returns value of "ABCD" without changing the state of X
+    hashvaluetype hash_extend(chartype Y) {
+    	return hashvalue ^ hasher.hashvalues[Y];
+    }
+
+    //  same as hash_extend, but with prepending the n-gram with character Y. If X = "ABC", then X.hash_prepend("D") returns value of "DABC" without changing the state of X
+    hashvaluetype hash_prepend(chartype Y) {
+    	hashvaluetype z (hasher.hashvalues[Y]);
+    	fastleftshiftnplusone(z);
+    	return z ^ hashvalue;
+    }
 
   
     hashvaluetype hashvalue;
