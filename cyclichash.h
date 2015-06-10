@@ -42,16 +42,6 @@ class CyclicHash {
     void fastleftshiftn(hashvaluetype & x) const {
         x =  ((x & maskn) << myr ) | (x >> (wordsize-myr)) ;     
     }
-    void fastleftshiftnplusone(hashvaluetype & x) const {
-        x =  ((x & maskn) << (myr+1) ) | (x >> (wordsize-myr-1)) ;
-    }
-
-    void fastleftshift(hashvaluetype & x, int r) const {
-        r = r % wordsize;
-        const hashvaluetype mask = (static_cast<hashvaluetype>(1)<<(wordsize-r)) -1 ;
-        x =  ((x & mask) << r ) | (x >> (wordsize-r)) ;
-    }
-
     
     void fastleftshift1(hashvaluetype & x) const {
         x =  ((x & mask1) << 1 ) | (x >> (wordsize-1)) ;
@@ -76,11 +66,20 @@ class CyclicHash {
     hashvaluetype  hash(container & c) {
     	hashvaluetype answer(0);
     	for(uint k = 0; k<c.size();++k) {
-    		fastleftshift(answer, 1) ;
-    		answer ^= hasher.hashvalues[c[k]];
+    		fastleftshift1(answer);
+    		answer ^= hasher.hashvalues[static_cast<unsigned int>(c[k])];
     	}
     	return answer;
     }
+
+      hashvaluetype  hashz(chartype outchar,uint n) {
+      	hashvaluetype answer = hasher.hashvalues[static_cast<unsigned int>(outchar)];
+      	for(uint k = 0; k<n;++k) {
+      		fastleftshift1(answer);
+      	}
+      	return answer;
+      }
+
     
     // add inchar as an input and remove outchar, the hashvalue is updated
     // this function can be used to update the hash value from the hash value of [outchar]ABC to the hash value of ABC[inchar]
@@ -111,13 +110,13 @@ class CyclicHash {
 
     //for an n-gram X it returns hash value of (n + 1)-gram XY without changing the object X. For example, if X = "ABC", then X.hash_extend("D") returns value of "ABCD" without changing the state of X
     hashvaluetype hash_extend(chartype Y) {
-    	return hashvalue ^ hasher.hashvalues[Y];
+    	return getfastleftshift1(hashvalue) ^ hasher.hashvalues[Y];
     }
 
     //  same as hash_extend, but with prepending the n-gram with character Y. If X = "ABC", then X.hash_prepend("D") returns value of "DABC" without changing the state of X
     hashvaluetype hash_prepend(chartype Y) {
     	hashvaluetype z (hasher.hashvalues[Y]);
-    	fastleftshiftnplusone(z);
+    	fastleftshiftn(z);
     	return z ^ hashvalue;
     }
 

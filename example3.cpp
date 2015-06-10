@@ -10,7 +10,7 @@
  // "ABC"quicky?
 
 int demo1() {
-	CyclicHash<> hf(3, 19);
+	CyclicHash<> hf(3, 32);
 	string input = "ABCD";
 	hf.eat(input[1]);    //B
 	hf.eat(input[2]);    //C
