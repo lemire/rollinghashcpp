@@ -19,7 +19,7 @@ int main(int argc, char * argv[])
 
     for (string::const_iterator j = base.begin(); j != base.end(); ++j)
     {
-    	hf.eat(*j);
+        hf.eat(*j);
     }
 
     std::cout << base << " "  << hf.hash(base) << std::endl;

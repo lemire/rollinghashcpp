@@ -4,7 +4,7 @@
 #include <iostream>
 
 // Example of 64-bit hashing
-    
+
 #include "cyclichash.h"
 
 
@@ -29,5 +29,5 @@ int main(int argc, char * argv[])
     uint64_t trueanswer  = hf.hash(charvect);
     if(trueanswer != hf.hashvalue ) throw runtime_error("bug");
     return 0;
-   
+
 }

@@ -2,10 +2,10 @@
 #include <vector>
 #include <memory>
 #include <iostream>
-    
-    // given hash value of "ABCD", can I have value of 
-    // "ABCDE", without computing the whole hash value?
-    
+
+// given hash value of "ABCD", can I have value of
+// "ABCDE", without computing the whole hash value?
+
 #include "cyclichash.h"
 
 
@@ -30,5 +30,5 @@ int main(int argc, char * argv[])
     uint32_t trueanswer  = hf.hash(charvect);
     if(trueanswer != hf.hashvalue ) throw runtime_error("bug");
     return 0;
-   
+
 }
