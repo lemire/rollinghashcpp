@@ -3,7 +3,7 @@
 #
 .SUFFIXES: .cpp .o .c .h
 
-CXXFLAGS =  -std=c++11 -ggdb -g3 -O2  -Wall  -Woverloaded-virtual  -Wsign-promo -Wold-style-cast 
+CXXFLAGS =  -std=c++11 -fexceptions -pedantic -ggdb -g3 -O2  -Wall -Woverloaded-virtual  -Wsign-promo -Wold-style-cast 
 #-DNDEBUG
 all: unit speedtesting example example2 example3 example64bits example4
 
