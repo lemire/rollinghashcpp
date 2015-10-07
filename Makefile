@@ -16,7 +16,7 @@ depend:
 	makedepend -- $(CXXFLAGS) -- $(SRCS)
 
 clean:
-	rm -f *.o unit speedtesting example example2 example64bits
+	rm -f *.o unit speedtesting example example2 example3 example4 example64bits
 
 HEADERS=cyclichash.h characterhash.h mersennetwister.h rabinkarphash.h generalhash.h threewisehash.h
 unit.o: $(HEADERS)
