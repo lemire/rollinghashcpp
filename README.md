@@ -1,5 +1,4 @@
 # Randomized rolling hash functions in C++ 
-[![Build Status](https://travis-ci.org/lemire/rollinghashcpp.png)](https://travis-ci.org/lemire/rollinghashcpp)
 
 
 License: Apache 2.0
