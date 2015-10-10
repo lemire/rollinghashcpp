@@ -1,4 +1,4 @@
-# Testing n-gram hash functions
+# Randomized rolling hash functions in C++ 
 [![Build Status](https://travis-ci.org/lemire/rollinghashcpp.png)](https://travis-ci.org/lemire/rollinghashcpp)
 
 
@@ -34,7 +34,7 @@ This is a set of C++ classes implementing various recursive n-gram hashing techn
 
 ##  Requirements 
 
-GNU GCC.
+A recent GNU GCC C++ compiler or a recent CLANG.
 
 ##  What should I do after I download it?
 
