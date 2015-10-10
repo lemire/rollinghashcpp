@@ -1,5 +1,6 @@
 # Testing n-gram hash functions
-Daniel Lemire
+[![Build Status](https://travis-ci.org/lemire/rollinghashcpp.png)](https://travis-ci.org/lemire/rollinghashcpp)
+
 
 License: Apache 2.0
 
