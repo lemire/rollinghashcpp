@@ -42,9 +42,8 @@ public:
         lastbit(static_cast<hashvaluetype>(1)<<wordsize),
         precomputedshift(precomputationtype==FULLPRECOMP ? (1<<n) : 0) {
         if(wordsize == 19) {
-            irreduciblepoly = 1 + (1<<2) + (1<<3) + (1<<5)
-                              + (1<<6) + (1<<7) + (1<<12) + (1<<16) + (1<<17)
-                              + (1<<18) + (1<<19);
+            irreduciblepoly = 1 + (1<<1) + (1<<2) + (1<<5)
+                               + (1<<19);
         } else if (wordsize == 9) {
             irreduciblepoly = 1+(1<<2)+(1<<3)+(1<<5)+(1<<9);
         } else {
