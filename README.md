@@ -64,4 +64,4 @@ then
 This work has been used in genomics, see
 
 
-* Ilia Minkin, Son Pham, Paul Medvedev, TwoPaCo: an efficient algorithm to build the compacted de Bruijn graph from many complete genomes, Bioinformatics (to appear). https://doi.org/10.1093/bioinformatics/btw609 and github.com/medvedevgroup/TwoPaCo
+* Ilia Minkin, Son Pham, Paul Medvedev, TwoPaCo: an efficient algorithm to build the compacted de Bruijn graph from many complete genomes, Bioinformatics (to appear). https://doi.org/10.1093/bioinformatics/btw609 and http://github.com/medvedevgroup/TwoPaCo
