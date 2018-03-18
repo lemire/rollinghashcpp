@@ -134,6 +134,10 @@ public:
         return z ^ hashvalue;
     }
 
+    // prepare to process a new string, you will need to call "eat" again
+    void reset() {
+      hashvalue = 0;
+    }
 
     hashvaluetype hashvalue;
     int n;

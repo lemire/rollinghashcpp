@@ -39,6 +39,11 @@ public:
         }
     }
 
+    // prepare to process a new string, you will need to call "eat" again
+    void reset() {
+      hashvalue = 0;
+    }
+
     // this is a convenience function, use eat,update and .hashvalue to use as a rolling hash function
     template<class container>
     hashvaluetype  hash(container & c) {
@@ -80,5 +85,3 @@ public:
 
 
 #endif
-
-

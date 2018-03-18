@@ -58,7 +58,10 @@ public:
             }
         }
     }
-
+    // prepare to process a new string, you will need to call "eat" again
+    void reset() {
+      hashvalue = 0;
+    }
 
     void fastleftshift(hashvaluetype & x, int r) const {
         for (int i = 0; i < r; ++i) {
@@ -128,4 +131,3 @@ public:
 
 
 #endif
-
