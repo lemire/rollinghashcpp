@@ -3,6 +3,8 @@
 
 
 #include "characterhash.h"
+#include <cstring>
+
 
 
 /**
@@ -107,7 +109,13 @@ public:
     }
     template<typename T>
     void mask_value(T &val) const {
-        if constexpr(!is_full_word()) val &= HASHMASK;
+#if __cplusplus >= 201703L
+#define CONSTIF if constexpr
+#else
+#define CONSTIF if
+#endif
+        CONSTIF(!is_full_word()) val &= HASHMASK;
+#undef CONSTIF
     }
 
     // this is a convenience function, use eat,update and .hashvalue to use as a rolling hash function

@@ -36,7 +36,10 @@ private:
 };
 
 template <typename hashvaluetype>
-constexpr hashvaluetype maskfnc(int bits) {
+#if __cplusplus >= 201402L
+constexpr
+#endif
+hashvaluetype maskfnc(int bits) {
     assert(bits>0);
     assert(bits<=sizeof(hashvaluetype)*8);
     hashvaluetype x = static_cast<hashvaluetype>(1) << (bits - 1);
