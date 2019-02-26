@@ -58,7 +58,9 @@ then
         ./speedtesting
 
 
+## Nim version
 
+See [Cyclic-Polynomial-Hash](https://github.com/MarcAzar/Cyclic-Polynomial-Hash) for a similar library written in Nim.
 
 ##  References
 
