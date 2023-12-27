@@ -1,4 +1,5 @@
 #include <fstream>
+#include <string>
 #include "cyclichash.h"
 #include "rabinkarphash.h"
 #include "generalhash.h"
@@ -67,9 +68,9 @@ void synthetic() {
 void grabFileContent(vector<unsigned char> & data, string filename) {
     string line;
     ifstream file(filename.c_str());
-    getline(file, line);
+    std::getline(file, line);
     while ( file.good() ) {
-        getline(file, line);
+        std::getline(file, line);
         for(uint k = 0; k<line.size(); ++k)
             data.push_back(line[k]);//presumably not very fast to do it char by char
     }
