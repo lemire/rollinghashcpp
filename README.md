@@ -19,6 +19,7 @@ These are randomized hash functions, meaning that each time you create a new has
 get new hash values for a given input.
 
 ##  Code sample
+```cpp
 
         const uint n(3);//hash all sequences of 3 characters
         const uint L(7); // you need 7 bits
@@ -34,7 +35,7 @@ get new hash values for a given input.
            hf.update(out,c); // update hash value
         }
         hf.reset(); // you can now hash a new string
-
+```
 
 
 ##  Requirements
