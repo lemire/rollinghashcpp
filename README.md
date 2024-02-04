@@ -1,6 +1,5 @@
 # Randomized rolling hash functions in C++
-[![Build Status](https://travis-ci.org/lemire/rollinghashcpp.png)](https://travis-ci.org/lemire/rollinghashcpp)
-
+[![Ubuntu 22.04 CI (GCC 11)](https://github.com/lemire/rollinghashcpp/actions/workflows/ubuntu22.yml/badge.svg)](https://github.com/lemire/rollinghashcpp/actions/workflows/ubuntu22.yml)
 
 License: Apache 2.0
 
