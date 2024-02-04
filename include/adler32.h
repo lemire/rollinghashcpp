@@ -36,7 +36,7 @@ public:
       sum1 += Base;
     }
 
-    sum2 = ((int)(sum2 - len * outchar + sum1 - 1) % (int)Base);
+    sum2 = (int(sum2 - len * outchar + sum1 - 1) % int(Base));
     if (sum2 < 0) {
       sum2 += Base;
     }
