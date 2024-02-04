@@ -43,18 +43,13 @@ A recent GNU GCC C++ compiler or a recent CLANG.
 
 ##  What should I do after I download it?
 
+It is a conventional Cmake projet.
 
-type:
-
-        make
-
-then
-
-        ./unit
-
-then
-
-        ./speedtesting
+```
+cmake -B build
+cmake --build build
+ctest --test-dir build
+```
 
 
 ## Nim version
