@@ -68,3 +68,4 @@ This work has been used in genomics, see
 
 
 * Ilia Minkin, Son Pham, Paul Medvedev, TwoPaCo: an efficient algorithm to build the compacted de Bruijn graph from many complete genomes, Bioinformatics (to appear). https://doi.org/10.1093/bioinformatics/btw609 and http://github.com/medvedevgroup/TwoPaCo
+* Xiaofei Zhao, BinDash, software for fast genome distance estimation on a typical personal laptop, Bioinformatics. https://academic.oup.com/bioinformatics/article/35/4/671/5058094?login=true and https://github.com/zhaoxiaofei/bindash?tab=readme-ov-file 
